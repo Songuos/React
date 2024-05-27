@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <div id="test"></div>
+
+    <script type="text/javascript" src="../react.development.js"></script>
+    <script type="text/javascript" src="../react-dom.development.js"></script>
+    <script type="text/javascript" src="../babel.min.js"></script>
+    <script type="text/babel">
+
+        class Time extends React.Component {
+            // 设置初始日期为当前日期
+            state = { date: new Date() }
+
+            // 在组件加载完成后，每秒更新一次日期
+            componentDidMount() {
+                setInterval(
+                    () => {
+                        // 更新日期
+                        this.setState({ date: new Date() })
+                    }, 1000)
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h1>hello</h1>
+                        <input type="text" />
+                        <span>现在是{this.state.date.toTimeString()}</span>
+                    </div>
+                )
+            }
+
+        }
+        ReactDOM.render(<Time />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>
