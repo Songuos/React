@@ -1,0 +1,96 @@
+.file-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.upload-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-box {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    width: 400px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.file-input {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.upload-placeholder {
+    text-align: center;
+    color: #aaa;
+}
+
+.upload-icon {
+    font-size: 50px;
+}
+
+.upload-text {
+    margin-top: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+}
+
+.upload-button,
+.download-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-button {
+    background-color: #6a0dad;
+    color: white;
+}
+
+.download-button {
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    display: none;
+    /* 初始状态下隐藏 */
+}
+
+.status-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.status-text {
+    color: #333;
+}
+
+.progress-bar {
+    width: 400px;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.progress {
+    height: 20px;
+    background-color: #4caf50;
+    width: 0;
+    transition: width 0.2s;
+}
