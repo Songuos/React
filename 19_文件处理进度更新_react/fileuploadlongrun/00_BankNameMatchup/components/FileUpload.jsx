@@ -45,11 +45,10 @@ function FileUpload() {
             setProcessedAmount(result.processedAmount);
 
             if (result.status === 'completed') {
-
-
                 setDownloadLink(`http://localhost:3001/api/download/${taskId}`);
-                alert('File processing completed. You can now download the result.');
+                setProcessedAmount(result.totalAmount); // 确保进度条到达100%
                 clearInterval(intervalId);
+                // alert('File processing completed. You can now download the result.');
             }
         }, 500); // 每隔0.5秒检查一次状态
     };
@@ -71,10 +70,15 @@ function FileUpload() {
             </form>
             {status && (
                 <div className="status-container">
-                    <p className="status-text">Status: {status}</p>
+                    <p className="status-text">Status: {(processedAmount / totalAmount) * 100}%</p>
                     {status === 'processing' && (
                         <div className="progress-bar">
                             <div className="progress" style={{ width: `${(processedAmount / totalAmount) * 100}%` }}></div>
+                        </div>
+                    )}
+                    {status === 'completed' && (
+                        <div className="progress-bar">
+                            <div className="progress" style={{ width: '100%' }}></div>
                         </div>
                     )}
                 </div>
