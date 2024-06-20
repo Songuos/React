@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Header from './components/Header'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -35,9 +35,8 @@ export default class App extends Component {
                             <div className="panel-body">
                                 {/* 注册路由 */}
                                 <Switch>
-                                    <Route exact path='/about' component={About} />
+                                    <Route path='/about' component={About} />
                                     <Route path='/home' component={Home} />
-                                    <Redirect to='/about' />
                                 </Switch>
 
                             </div>
