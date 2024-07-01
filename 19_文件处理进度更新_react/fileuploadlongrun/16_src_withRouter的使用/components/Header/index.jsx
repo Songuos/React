@@ -30,5 +30,5 @@ class Header extends Component {
 }
 
 //withRouter 可以加工一般组件，让一般组件具备路由组件所特有的API
-//withRouter 的返回值是经过包裹的新组件
+//withRouter 的返回值是一个经过包裹的新组件
 export default withRouter(Header)
