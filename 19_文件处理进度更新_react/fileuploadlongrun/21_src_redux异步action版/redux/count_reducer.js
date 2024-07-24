@@ -21,10 +21,7 @@ export default function countReducer(preState = initState, action) {
         case DECREMENT: //如果是减
             return preState - data
 
-        default:
-
-            //如果是初始化时的preState是undefined，则返回0
-
+        default://如果是初始化时的preState是undefined，则返回0
             return preState
     }
 }
