@@ -1,7 +1,7 @@
 /*
     该文件专门为Count组建生成action对象
 */
-import { INCREMENT, DECREMENT } from './constant'
+import { INCREMENT, DECREMENT } from '../constant'
 
 
 export const createIncrementAction = (data) => {

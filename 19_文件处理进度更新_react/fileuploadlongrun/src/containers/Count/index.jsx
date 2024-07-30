@@ -3,7 +3,7 @@ import {
     createDecrementAction,
     createIncrementAction,
     createIncrementAsyncAction
-} from '../../redux/count_action'
+} from '../../redux/actions/count'
 
 //引入connect用于连接UI组件与redux
 import { connect } from 'react-redux'
