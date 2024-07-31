@@ -59,14 +59,9 @@ class Count extends Component {
     2.connect(mapStateToProps, mapDispatchToProps)(CountUI)
 */
 export default connect(
-    state => ({ count: state }),
 
-    //mapDispatchToProps的一般写法
-    // dispatch => ({
-    //     jia: number => dispatch(createIncrementAction(number)),
-    //     jian: number => dispatch(createDecrementAction(number)),
-    //     jiaAsync: (number, time) => createIncrementAsyncAction(number, time)
-    // })
+    //mapStateToProps的简写
+    state => ({ count: state }),
 
     //mapDispatchToProps的简写
     {
