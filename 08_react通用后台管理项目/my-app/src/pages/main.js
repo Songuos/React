@@ -8,6 +8,7 @@ import {
     UserOutlined,
     VideoCameraOutlined,
 } from '@ant-design/icons';
+import CommonHeader from '../components/commonHeader';
 import { Button, Layout, Menu, theme } from 'antd';
 import CommonAside from '../components/commonAside'
 
@@ -51,7 +52,7 @@ export default function Main() {
             </Sider> */}
             <CommonAside />
             <Layout>
-                <Header
+                {/* <Header
                     style={{
                         padding: 0,
                         background: colorBgContainer,
@@ -67,7 +68,8 @@ export default function Main() {
                             height: 64,
                         }}
                     />
-                </Header>
+                </Header> */}
+                <CommonHeader />
                 <Content
                     style={{
                         margin: '24px 16px',

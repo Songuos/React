@@ -1,13 +1,47 @@
 import React from 'react'
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-} from '@ant-design/icons';
+import MenuConfig from '../../config'
+import * as Icon from '@ant-design/icons';
+// import {
+//     MenuFoldOutlined,
+//     MenuUnfoldOutlined,
+//     UploadOutlined,
+//     UserOutlined,
+//     VideoCameraOutlined,
+// } from '@ant-design/icons';
+
+
 import { Button, Layout, Menu, theme } from 'antd';
 const { Header, Sider, Content } = Layout;
+
+
+
+//动态获取icon
+const iconToElement = (name) => React.createElement(Icon[name])
+
+//处理菜单的数据,items是一个数组，里面元素都是对象的形式，每个对象分别包含以及节点的属性
+const items = MenuConfig.map((icon) => {
+    //没有子菜单
+    const child = {
+        key: icon.path,
+        icon: iconToElement(icon.icon),
+        label: icon.label
+    }
+
+    //有子菜单
+    if (icon.children) {
+        child.children = icon.children.map(item => {
+            return {
+                key: item.path,
+                label: item.label
+            }
+        })
+    }
+    return child
+})
+
+
+
+
 
 export default function CommonAside() {
     return (
@@ -17,23 +51,7 @@ export default function CommonAside() {
                 theme="dark"
                 mode="inline"
                 defaultSelectedKeys={['1']}
-                items={[
-                    {
-                        key: '1',
-                        icon: <UserOutlined />,
-                        label: 'nav 1',
-                    },
-                    {
-                        key: '2',
-                        icon: <VideoCameraOutlined />,
-                        label: 'nav 2',
-                    },
-                    {
-                        key: '3',
-                        icon: <UploadOutlined />,
-                        label: 'nav 3',
-                    },
-                ]}
+                items={items}
                 style={{ height: '100%' }}
             />
         </Sider>
