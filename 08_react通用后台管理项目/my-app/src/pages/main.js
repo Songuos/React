@@ -11,6 +11,7 @@ import {
 import CommonHeader from '../components/commonHeader';
 import { Button, Layout, Menu, theme } from 'antd';
 import CommonAside from '../components/commonAside'
+import { useSelector } from 'react-redux'
 
 const { Header, Sider, Content } = Layout;
 
@@ -21,6 +22,8 @@ export default function Main() {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
+    //获取展开或者收起的状态
+    const collapsed = useSelector(state => state.tab.isCollapse)
 
     return (
         <Layout className='main-container '>
@@ -50,7 +53,7 @@ export default function Main() {
                     style={{ height: '100%' }}
                 />
             </Sider> */}
-            <CommonAside />
+            <CommonAside collapsed={collapsed} />
             <Layout>
                 {/* <Header
                     style={{
@@ -69,7 +72,7 @@ export default function Main() {
                         }}
                     />
                 </Header> */}
-                <CommonHeader />
+                <CommonHeader collapsed={collapsed} />
                 <Content
                     style={{
                         margin: '24px 16px',

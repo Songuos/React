@@ -1,5 +1,8 @@
 .header-container {
     display: flex;
+
+    /* 这个属性定义了 flex 容器内 flex 项在主轴上的对齐方式。space-between 值会导致 flex 项沿着主轴均匀分布，第一个 flex 项位于主轴的开始位置，最后一个 flex 项位于主轴的结束位置，剩余空间平均分配在所有 flex 项之间。 */
     justify-content: space-between;
+
     align-items: center;
 }

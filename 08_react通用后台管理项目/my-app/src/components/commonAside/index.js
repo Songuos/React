@@ -43,7 +43,7 @@ const items = MenuConfig.map((icon) => {
 
 
 
-export default function CommonAside() {
+const CommonAside = () => {
     return (
         <Sider trigger={null} collapsible >
             <h3 className="app-name">通用后台管理系统</h3>
@@ -57,3 +57,6 @@ export default function CommonAside() {
         </Sider>
     )
 }
+
+
+export default CommonAside;

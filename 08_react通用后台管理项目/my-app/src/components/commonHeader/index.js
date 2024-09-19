@@ -1,10 +1,14 @@
 import React from 'react'
 import './index.css'
+
+//如何获取展开收起的初始状态
+import { } from 'react-redux'
+
 import { Button, Layout, Avatar, Dropdown } from 'antd';
 import { MenuFoldOutlined } from '@ant-design/icons';
 const { Header } = Layout;
 
-function CommonHeader() {
+const CommonHeader = ({ collapsed }) => {
     //登出函数
     const logout = () => { }
 
@@ -26,6 +30,9 @@ function CommonHeader() {
             )
         }
     ]
+
+    //点击展开收起按钮
+    const setCollapsed = () => { }
 
     return (
         <Header className='header-container'>
