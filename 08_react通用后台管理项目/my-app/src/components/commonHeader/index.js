@@ -1,11 +1,14 @@
 import React from 'react'
+import { Button, Layout, Avatar, Dropdown } from 'antd';
+import { MenuFoldOutlined } from '@ant-design/icons';
 import './index.css'
 
 //如何获取展开收起的初始状态
-import { } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { collapseMenu } from '../../store/reducers/tab'
 
-import { Button, Layout, Avatar, Dropdown } from 'antd';
-import { MenuFoldOutlined } from '@ant-design/icons';
+
+
 const { Header } = Layout;
 
 const CommonHeader = ({ collapsed }) => {
@@ -30,9 +33,14 @@ const CommonHeader = ({ collapsed }) => {
             )
         }
     ]
+    //创建dispatch
+    const dispatch = useDispatch()
 
     //点击展开收起按钮
-    const setCollapsed = () => { }
+    const setCollapsed = () => {
+        console.log(collapsed)
+        dispatch(collapseMenu())
+    }
 
     return (
         <Header className='header-container'>
@@ -47,6 +55,7 @@ const CommonHeader = ({ collapsed }) => {
                     height: 32,
                     backgroundColor: '#fff'
                 }}
+                onClick={() => setCollapsed()}
             />
             <Dropdown menu={{ items }}>
                 <Avatar size={36} src={

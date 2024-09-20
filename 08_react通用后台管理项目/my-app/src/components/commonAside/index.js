@@ -43,10 +43,11 @@ const items = MenuConfig.map((icon) => {
 
 
 
-const CommonAside = () => {
+const CommonAside = ({ collapsed }) => {
+    console.log(collapsed, 'commonAside')
     return (
-        <Sider trigger={null} collapsible >
-            <h3 className="app-name">通用后台管理系统</h3>
+        <Sider trigger={null} collapsed={collapsed} >
+            <h3 className="app-name">{collapsed ? '后台' : '通用后台管理系统'}</h3>
             <Menu
                 theme="dark"
                 mode="inline"

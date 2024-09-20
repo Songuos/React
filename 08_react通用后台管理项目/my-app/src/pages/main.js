@@ -11,11 +11,13 @@ import {
 import CommonHeader from '../components/commonHeader';
 import { Button, Layout, Menu, theme } from 'antd';
 import CommonAside from '../components/commonAside'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+
+
 
 const { Header, Sider, Content } = Layout;
 
-export default function Main() {
+const Main = () => {
 
     // const [collapsed, setCollapsed] = useState(false);
     const {
@@ -82,9 +84,11 @@ export default function Main() {
                         borderRadius: borderRadiusLG,
                     }}
                 >
-                    Content
+                    <Outlet />
                 </Content>
             </Layout>
         </Layout>
     );
 }
+
+export default Main
