@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Col, Row, Card } from 'antd'
 import './home.css'
+import { getData } from '../../api'
 
 export default function Home() {
     const userImg = require("../../assets/images/user.png")
+
+    //空数组表示在页面第一次加载的时候，只执行一次
+    useEffect(() => {
+        getData().then((res) => {
+            console.log(res, 'res')
+        })
+    }, [])
+
     return (
         <Row className='home'>
             <Col span={8}>

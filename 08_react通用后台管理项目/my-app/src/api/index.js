@@ -1,7 +1,7 @@
 import http from './axios'
 
 export const getData = () => {
-    http.request({
+    return http.request({
         url: '/home/getData',
         method: 'get',
         params: {}
