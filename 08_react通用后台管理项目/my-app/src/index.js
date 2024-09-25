@@ -10,6 +10,7 @@ import './api/mock'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  //严格模式帮助发现代码问题，会自动执行effect一次，最好在开发环境开启
   <React.StrictMode>
     <Provider store={store}>
       <App />
