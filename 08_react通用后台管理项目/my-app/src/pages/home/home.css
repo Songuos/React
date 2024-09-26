@@ -28,3 +28,29 @@
     margin-left: 60px;
     color: #666666;
 }
+
+
+.home .num {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.home .num .ant-card {
+    width: 33.3%;
+}
+
+.home .num .ant-card-body {
+    display: flex;
+    padding: 10px 25px;
+}
+
+.home .num .icon-box {
+    width: 80px;
+    height: 80px;
+    text-align: center;
+    line-height: 85px;
+    color: blue;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
