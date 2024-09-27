@@ -3,6 +3,8 @@ import { Col, Row, Card, Table } from 'antd'
 import * as Icon from '@ant-design/icons'
 import './home.css'
 import { getData } from '../../api'
+import MyEcharts from '../../components/Echarts'
+
 //table列的数据
 const columns = [
     {
@@ -69,20 +71,49 @@ const iconToElement = (name) => React.createElement(Icon[name])
 const Home = () => {
     const userImg = require("../../assets/images/user.png")
 
-    //空数组表示在页面第一次加载的时候，只执行一次
+    //创建echart响应数据
+    const [echartData, setEchartData] = useState(null)//初始化为null以避免错误
+    const [tableData, setTableData] = useState([])//定义table数据
+
+    //空数组表示在页面第一次加载的时候，只执行一次，表示dom首次渲染完成
     useEffect(() => {
         getData().then(({ data }) => {
-            console.log(data, 'res')
-            const { tableData } = data.data
-            setTableData(tableData)
+
+            const { tableData, orderData } = data.data
+            setTableData(tableData)//设置table数据
+
+            //对于echarts数据的组装
+            const order = orderData
+            const xData = order.date//x轴的数据
+
+            //获取order.data的键名（例如：苹果、vivo等）
+            const keyArray = Object.keys(order.data[0])
+
+            console.log('keyArray:', keyArray);  // 打印确认key
+            //series数据组装
+            const series = keyArray.map(key => ({
+                name: key,
+                data: order.data.map(item => item[key]),
+                type: 'line'
+            }))
+
+            // keyArray.forEach(key => {
+            //     series.push({
+            //         name: key,
+            //         data: order.data.map(item => item[key]),
+            //         type: 'line'
+            //     })
+            // })
+
+            //设置Echarts数据
+            setEchartData({
+                order: {
+                    xData,
+                    series
+                }
+            })
         })
     }, [])
-
-    //定义table数据
-    const [tableData, setTableData] = useState([])
-
-
-
 
     return (
         <Row className='home'>
@@ -111,7 +142,7 @@ const Home = () => {
                         countData.map((item, index) => {
                             return (
                                 <Card key={index}>
-                                    <div className="icon-box">
+                                    <div className="icon-box" style={{ background: item.color }}>
                                         {iconToElement(item.icon)}
                                     </div>
                                     <div className="detail">
@@ -123,6 +154,9 @@ const Home = () => {
                         })
                     }
                 </div>
+                {echartData && echartData.order && (
+                    <MyEcharts echartData={echartData.order} style={{ height: '300px' }} />
+                )}
             </Col>
 
         </Row>
