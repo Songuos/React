@@ -1,28 +1,18 @@
 import React from 'react'
-// import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-} from '@ant-design/icons';
 import CommonHeader from '../components/commonHeader';
-import { Button, Layout, Menu, theme } from 'antd';
+import { Layout } from 'antd';
 import CommonAside from '../components/commonAside'
 import { useSelector } from 'react-redux';
-
-
 
 const { Header, Sider, Content } = Layout;
 
 const Main = () => {
 
     // const [collapsed, setCollapsed] = useState(false);
-    const {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
+    // const {
+    //     token: { colorBgContainer, borderRadiusLG },
+    // } = theme.useToken();
 
     //获取展开或者收起的状态
     const collapsed = useSelector(state => state.tab.isCollapse)
@@ -80,8 +70,8 @@ const Main = () => {
                         margin: '24px 16px',
                         padding: 24,
                         minHeight: 280,
-                        background: colorBgContainer,
-                        borderRadius: borderRadiusLG,
+                        // background: colorBgContainer,
+                        // borderRadius: borderRadiusLG,
                     }}
                 >
                     <Outlet />

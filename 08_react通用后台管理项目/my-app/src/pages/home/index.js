@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row, Card, Table } from 'antd'
-import * as Icon from '@ant-design/icons'
-import './home.css'
 import { getData } from '../../api'
+import './home.css'
+import * as Icon from '@ant-design/icons'
 import MyEcharts from '../../components/Echarts'
 
 //table列的数据
@@ -69,47 +69,64 @@ const countData = [
 const iconToElement = (name) => React.createElement(Icon[name])
 
 const Home = () => {
-    const userImg = require("../../assets/images/user.png")
+    const userImg = require("../../assets/images/user_song.png")
 
     //创建echart响应数据
-    const [echartData, setEchartData] = useState(null)//初始化为null以避免错误
     const [tableData, setTableData] = useState([])//定义table数据
+    const [echartData, setEchartData] = useState({})//初始化为null以避免错误
+
 
     //空数组表示在页面第一次加载的时候，只执行一次，表示dom首次渲染完成
     useEffect(() => {
         getData().then(({ data }) => {
+            const { tableData, orderData, userData, videoData } = data.data;
+            setTableData(tableData);
+            console.log('videoData', videoData)
 
-            const { tableData, orderData } = data.data
-            setTableData(tableData)//设置table数据
+            if (!orderData || !orderData.date || !orderData.data) {
+                console.error('orderData 不完整:', orderData);
+                return;
+            }
 
-            //对于echarts数据的组装
             const order = orderData
-            const xData = order.date//x轴的数据
-
-            //获取order.data的键名（例如：苹果、vivo等）
-            const keyArray = Object.keys(order.data[0])
-
-            console.log('keyArray:', keyArray);  // 打印确认key
-            //series数据组装
-            const series = keyArray.map(key => ({
-                name: key,
-                data: order.data.map(item => item[key]),
-                type: 'line'
-            }))
-
-            // keyArray.forEach(key => {
-            //     series.push({
-            //         name: key,
-            //         data: order.data.map(item => item[key]),
-            //         type: 'line'
-            //     })
-            // })
-
-            //设置Echarts数据
+            const xData = order.date; // x轴的数据
+            const keyArray = Object.keys(order.data[0]); // 确保 orderData.data[0] 存在
+            const series = []
+            keyArray.forEach(key => {
+                series.push({
+                    name: key,
+                    data: order.data.map(item => item[key]),
+                    type: 'line'
+                })
+            });
             setEchartData({
+                ...echartData,
                 order: {
                     xData,
                     series
+                },
+                user: {
+                    xData: userData.map(item => item.date),
+                    series: [
+                        {
+                            name: '新增用户',
+                            data: userData.map(item => item.new),
+                            type: 'bar'
+                        },
+                        {
+                            name: '活跃用户',
+                            data: userData.map(item => item.active),
+                            type: 'bar'
+                        }
+                    ]
+                },
+                video: {
+                    series: [
+                        {
+                            data: videoData,
+                            type: 'pie'
+                        }
+                    ]
                 }
             })
         })
@@ -131,11 +148,13 @@ const Home = () => {
                         <p>上次登陆地点：<span>南京</span></p>
                     </div>
                 </Card>
-                <Card>
+                {/* style={{ marginTop: '20px' }} */}
+                <Card hoverable>
                     <Table rowKey={"name"} columns={columns} dataSource={tableData} pagination={false} />
                 </Card>
 
             </Col>
+            {/* style={{ marginTop: '20px' }}  */}
             <Col span={16}>
                 <div className="num">
                     {
@@ -154,11 +173,12 @@ const Home = () => {
                         })
                     }
                 </div>
-                {echartData && echartData.order && (
-                    <MyEcharts echartData={echartData.order} style={{ height: '300px' }} />
-                )}
+                {echartData && echartData.order && <MyEcharts chartData={echartData.order} style={{ height: '300px' }} />}
+                <div className="graph">
+                    {echartData.user && <MyEcharts chartData={echartData.user} style={{ height: '240px', width: '50%' }} />}
+                    {echartData.video && <MyEcharts chartData={echartData.video} isAxisChart={false} style={{ width: '50%', height: '260px' }} />}
+                </div>
             </Col>
-
         </Row>
     )
 }

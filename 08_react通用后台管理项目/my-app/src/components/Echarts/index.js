@@ -57,23 +57,22 @@ const normalOption = {
 
 
 //echarts组建
-const Echarts = ({ style, chartData, isAixsChart = true }) => {
+const Echarts = ({ style, chartData, isAxisChart = true }) => {
 
     //获取dom实例
     const echartRef = useRef()
     let echartObj = useRef(null)
+    console.log('chartData in MyEcharts:', chartData);
     //组件首次加载完成之后，chart数据源发生变化的时候
     useEffect(() => {
-        let options
-
-        //echarts的初始化
+        let options;
+        // echart 初始化
         if (!echartObj.current) {
-            echartObj.current = echarts.init(echartRef.current)
+            echartObj.current = echarts.init(echartRef.current);
         }
 
-        //设置option
-        if (isAixsChart) {
-            //设置x轴数据
+        // 设置图表的配置项和数据
+        if (isAxisChart) {
             axisOption.xAxis.data = chartData.xData
             axisOption.series = chartData.series
             options = axisOption
@@ -81,13 +80,13 @@ const Echarts = ({ style, chartData, isAixsChart = true }) => {
             normalOption.series = chartData.series
             options = normalOption
         }
-        echartObj.current.setOption(options)
+        // 设置图表的配置项和数据
+        echartObj.current.setOption(options);
 
-    }, [chartData])
+
+    }, [chartData]);
     return (
-        <div style={style} ref={echartRef}>
-
-        </div>
+        <div style={style} ref={echartRef}></div>
     )
 }
 

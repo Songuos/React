@@ -73,3 +73,8 @@
     text-align: center;
     color: #999999;
 }
+
+.home .graph {
+    display: flex;
+    margin-top: 20px;
+}
