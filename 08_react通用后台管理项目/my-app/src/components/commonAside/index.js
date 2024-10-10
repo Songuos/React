@@ -1,6 +1,7 @@
 import React from 'react'
 import MenuConfig from '../../config'
 import * as Icon from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 // import {
 //     MenuFoldOutlined,
 //     MenuUnfoldOutlined,
@@ -44,7 +45,15 @@ const items = MenuConfig.map((icon) => {
 
 
 const CommonAside = ({ collapsed }) => {
-    console.log(collapsed, 'commonAside')
+    const navigate = useNavigate()
+
+    const selectMenu = (e) => {
+        console.log(e)
+        navigate(e.key)
+    }
+
+
+
     return (
         <Sider trigger={null} collapsed={collapsed} >
             <h3 className="app-name">{collapsed ? '后台' : '通用后台管理系统'}</h3>
@@ -54,6 +63,7 @@ const CommonAside = ({ collapsed }) => {
                 defaultSelectedKeys={['1']}
                 items={items}
                 style={{ height: '100%' }}
+                onClick={selectMenu}
             />
         </Sider>
     )
