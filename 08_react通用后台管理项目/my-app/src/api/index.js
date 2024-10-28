@@ -7,3 +7,11 @@ export const getData = () => {
         params: {}
     })
 }
+
+export const getUser = () => {
+    return http.request({
+        url: '/user/getUser',
+        method: 'get',
+        params: {}
+    })
+}
