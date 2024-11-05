@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, Table, Popconfirm } from 'antd'
+import { Button, Form, Input, Table, Popconfirm, Modal } from 'antd'
 import './user.css'
 import { getUser } from '../../api'
 
@@ -16,9 +16,21 @@ const User = () => {
 
     const [tableData, setTableData] = useState([])
 
-    //新增
+    //0 新增, 1 编辑
+    const [modalType, setModalType] = useState(0)
+
+    const [isModalOpen, setIsmodalOpen] = useState(false)
+
+    //新增/编辑
     const handleClick = (type, rowData) => {
         console.log(type)
+        setIsmodalOpen(isModalOpen => !isModalOpen)
+
+        if (type == 'add') {
+            setModalType(0)
+        } else {
+            setModalType(1)
+        }
     }
 
     //提交
@@ -40,6 +52,16 @@ const User = () => {
             //console.log(res, 'res')
             setTableData(data.list)
         })
+    }
+
+    //弹窗确定
+    const handleOk = () => {
+        setIsmodalOpen(false)
+    }
+
+    //弹窗取消
+    const handleCancel = () => {
+        setIsmodalOpen(false)
     }
 
     const columns = [
@@ -110,6 +132,16 @@ const User = () => {
                 </Form>
             </div>
             <Table columns={columns} dataSource={tableData} rowKey={'id'} />
+            <Modal
+                open={isModalOpen}
+                title={modalType === 0 ? '新增用户' : '编辑用户'}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                okText="确定"
+                cancelText="取消"
+            >
+                123123123
+            </Modal>
         </div>
     )
 }
