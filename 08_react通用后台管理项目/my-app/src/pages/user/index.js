@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, Table, Popconfirm, Modal } from 'antd'
+import { Button, Form, Input, Table, Popconfirm, Modal, InputNumber, Select, DatePicker } from 'antd'
 import './user.css'
-import { getUser } from '../../api'
-
-
+import { getUser, addUser, editUser, delUser } from '../../api'
+import dayjs from 'dayjs'
 
 
 const User = () => {
@@ -20,8 +19,10 @@ const User = () => {
     const [modalType, setModalType] = useState(0)
 
     const [isModalOpen, setIsmodalOpen] = useState(false)
+    //创建form实例
+    const [form] = Form.useForm();
 
-    //新增/编辑
+    //新增/编辑(弹窗是否显示)
     const handleClick = (type, rowData) => {
         console.log(type)
         setIsmodalOpen(isModalOpen => !isModalOpen)
@@ -30,6 +31,10 @@ const User = () => {
             setModalType(0)
         } else {
             setModalType(1)
+            const cloneData = JSON.parse(JSON.stringify(rowData))
+            cloneData.birth = dayjs(cloneData.birth)
+            //表单数据回填
+            form.setFieldsValue(cloneData)
         }
     }
 
@@ -54,15 +59,40 @@ const User = () => {
         })
     }
 
-    //弹窗确定
+    //在弹窗中点击确定
     const handleOk = () => {
         setIsmodalOpen(false)
+        //form表单校验
+        form.validateFields().then((val) => {
+            console.log(val, 'val')
+            //格式化日期
+            val.birth = dayjs(val.birth).format('YYYY-MM-DD')
+            console.log(val, 'newval')
+            //调后端接口
+            if (modalType) {//编辑
+                editUser(val).then(() => {
+                    handleCancel()
+                    getTableData()
+                })
+            } else {
+                addUser(val).then(() => {
+                    handleCancel()
+                    getTableData()
+                })
+            }
+        }).catch((err) => {
+            console.log(err, 'err')
+        })
+
     }
 
-    //弹窗取消
+
+    //在弹窗中点击取消
     const handleCancel = () => {
         setIsmodalOpen(false)
+        form.resetFields()
     }
+
 
     const columns = [
         {
@@ -140,7 +170,108 @@ const User = () => {
                 okText="确定"
                 cancelText="取消"
             >
-                123123123
+
+                <Form
+                    //将form绑定在当前位置
+                    form={form}
+                    labelCol={{
+                        span: 6
+                    }}
+                    wrapperCol={{
+                        span: 18
+                    }}
+                    labelAlign='left'
+                >
+                    {
+                        modalType === 1 &&
+                        <Form.Item
+                            name='id'
+                            hidden
+                        >
+                            <Input />
+                        </Form.Item>
+                    }
+                    <Form.Item
+                        label='姓名'
+                        name='name'
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入姓名'
+                            }
+                        ]}
+                    >
+                        <Input placeholder='请输入姓名' />
+                    </Form.Item>
+                    <Form.Item
+                        label='年龄'
+                        name='age'
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入年龄'
+                            },
+                            {
+                                type: 'number',
+                                message: '年龄必须是数字'
+                            }
+                        ]}
+                    >
+                        <InputNumber placeholder='请输入年龄' />
+                    </Form.Item>
+                    <Form.Item
+                        label='性别'
+                        name='sex'
+                        rules={[
+                            {
+                                required: true,
+                                message: '性别是必选'
+                            },
+                            {
+                                type: 'number',
+                                message: '年龄必须是数字'
+                            }
+                        ]}
+                    >
+                        <Select
+                            placeholder='请选择性别'
+                            options={[
+                                { value: 0, label: '男' },
+                                { value: 1, label: '女' }
+                            ]}
+
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label='出生日期'
+                        name='birth'
+                        rules={[
+                            {
+                                required: true,
+                                message: '请选择出生日期'
+                            }
+                        ]}
+                    >
+                        <DatePicker
+                            placeholder='请选择'
+                            format='YYYY/MM/DD'
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label='地址'
+                        name='addr'
+                        rules={[
+                            {
+                                required: true,
+                                message: '请填写地址'
+                            }
+                        ]}
+                    >
+                        <Input
+                            placeholder='请填写地址'
+                        />
+                    </Form.Item>
+                </Form>
             </Modal>
         </div>
     )
