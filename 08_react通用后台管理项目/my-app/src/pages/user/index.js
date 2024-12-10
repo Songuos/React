@@ -42,15 +42,21 @@ const User = () => {
     const handleFinish = (values) => {
         console.log('Success:', values);
         setListData({
-            name: values.name
+            name: values.keyword
+        })
+    }
+    useEffect(() => {
+        getTableData()
+    }, [listData])
+
+    //删除
+    const handleDelete = ({ id }) => {
+        delUser({ id }).then(() => {
+            getTableData()
         })
     }
 
-    //删除
-    const handleDelete = (rowData) => {
-
-    }
-
+    //请求用户列表数据
     const getTableData = () => {
         console.log('获取用户列表数据')
         getUser(listData).then(({ data }) => {
@@ -161,7 +167,7 @@ const User = () => {
                     </Form.Item>
                 </Form>
             </div>
-            <Table columns={columns} dataSource={tableData} rowKey={'id'} />
+            <Table style={{ marginTop: '10px' }} columns={columns} dataSource={tableData} rowKey={'id'} />
             <Modal
                 open={isModalOpen}
                 title={modalType === 0 ? '新增用户' : '编辑用户'}

@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import CommonHeader from '../components/commonHeader';
 import { Layout } from 'antd';
 import CommonAside from '../components/commonAside'
+import CommonTag, { commonTag } from '../components/commonTag'
 import { useSelector } from 'react-redux';
 
 const { Header, Sider, Content } = Layout;
@@ -65,6 +66,7 @@ const Main = () => {
                     />
                 </Header> */}
                 <CommonHeader collapsed={collapsed} />
+                <CommonTag />
                 <Content
                     style={{
                         margin: '24px 16px',
